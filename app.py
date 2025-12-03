@@ -13,9 +13,9 @@ st.set_page_config(page_title="Market & Sentiment Dashboard", layout="wide")
 # ------------------------------
 @st.cache_data
 def load_data():
-    stocks_url = "https://drive.google.com/file/d/15OmtMwBNGlE_UoB0vVnSyWhl4SBRDuEz/view?usp=sharing"
-    tweets_url = "https://drive.google.com/file/d/1BQuO-3015cvVniWZcKXzYos5PlpkqtPn/view?usp=sharing"
-    news_url   = "https://drive.google.com/file/d/1F4ffWPMfH1k2Oa17_lUZouNlI4GKXyvm/view?usp=sharing"
+    stocks_url = "https://drive.google.com/uc?export=download&id=15OmtMwBNGlE_UoB0vVnSyWhl4SBRDuEz"
+    tweets_url = "https://drive.google.com/uc?export=download&id=1BQuO-3015cvVniWZcKXzYos5PlpkqtPn"
+    news_url   = "https://drive.google.com/uc?export=download&id=1F4ffWPMfH1k2Oa17_lUZouNlI4GKXyvm"
 
     df_stocks = pd.read_csv(stocks_url)
     df_tweets = pd.read_csv(tweets_url)
