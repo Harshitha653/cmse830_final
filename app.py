@@ -65,7 +65,7 @@ if page == "Overview":
 # ------------------------------
 elif page == "Stocks":
     st.title("Stock Analysis")
-    ticker_list = df_stocks['Ticker'].unique().tolist()
+    ticker_list = df_stocks['ticker'].unique().tolist()
     selected_ticker = st.selectbox("Select Ticker", ticker_list)
     
     plot_stock_trends(df_stocks, selected_ticker)

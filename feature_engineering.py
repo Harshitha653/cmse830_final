@@ -38,20 +38,26 @@ def preprocess_news(df):
     return df
 
 def preprocess_stocks(df):
-    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
-    df = df.dropna(subset=['Date'])
-    df = df.sort_values('Date')
+    # Normalize column names → all lowercase
+    df.columns = df.columns.str.strip().str.lower()
 
-    numeric_cols = ["Open", "High", "Low", "Close", "Volume", "OpenInt"]
+    # Parse date
+    df['date'] = pd.to_datetime(df['date'], errors='coerce')
+    df = df.dropna(subset=['date'])
+    df = df.sort_values('date')
+
+    # Convert numeric columns
+    numeric_cols = ["open", "high", "low", "close", "volume", "openint"]
     df[numeric_cols] = df[numeric_cols].apply(pd.to_numeric, errors='coerce')
 
-    df["Daily_Return"] = df["Close"].pct_change()
-    df["Volatility"] = df["Daily_Return"].rolling(window=7).std()
+    # ✔ Create Daily Return
+    df["daily_return"] = df["close"].pct_change().fillna(0)
 
-    df["Daily_Return"].fillna(0, inplace=True)
-    df["Volatility"].fillna(0, inplace=True)
+    # ✔ 7-day rolling volatility
+    df["volatility"] = df["daily_return"].rolling(window=7).std().fillna(0)
 
     return df
+
 
 def vectorize_text(df, column='text_clean', method='tfidf', max_features=5000):
     if method == 'tfidf':
