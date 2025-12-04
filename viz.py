@@ -32,7 +32,7 @@ def plot_scatter(df, x, y):
 
 
 def plot_correlation_heatmap(df, numeric):
-    fig, ax = plt.subplots(figsize=(8,6))
+    fig, ax = plt.subplots(figsize=(8, 6))
     sns.heatmap(df[numeric].corr(), cmap="viridis")
     st.pyplot(fig)
 
@@ -44,8 +44,7 @@ def plot_pairplot(df, cols):
 
 def plot_time_series(df, time_col, val_col):
     fig, ax = plt.subplots()
-    df = df.dropna(subset=[time_col, val_col])
-    df = df.sort_values(time_col)
+    df = df.dropna(subset=[time_col, val_col]).sort_values(time_col)
     ax.plot(df[time_col], df[val_col])
     plt.xticks(rotation=45)
     st.pyplot(fig)
