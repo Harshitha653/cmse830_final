@@ -1,16 +1,11 @@
 import pickle
 import numpy as np
 
+import pickle
+import gzip
 
 def load_model(path: str):
-    """
-    Load a model bundle from disk.
-
-    The bundle is expected to be a dict with keys:
-      - 'model': trained classifier
-      - 'vectorizer': fitted vectorizer
-    """
-    with open(path, "rb") as f:
+    with gzip.open(path, "rb") as f:
         obj = pickle.load(f)
     return obj
 

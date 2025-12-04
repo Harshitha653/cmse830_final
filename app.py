@@ -132,7 +132,7 @@ elif page == "Sentiment Prediction":
     text = st.text_area("Enter a tweet:")
 
     if "model_bundle" not in st.session_state:
-        st.session_state.model_bundle = load_model("ensemble_model.pkl")
+        st.session_state.model_bundle = load_model("ensemble_model_compact.pkl.gz")
 
     bundle = st.session_state.model_bundle
     model = bundle["model"]
