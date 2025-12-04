@@ -242,141 +242,134 @@ elif page == "Model Evaluation":
 # -------------------------------------------------------
 elif page == "Project Report & Rubric Alignment":
     st.title("📘 Full Project Report & Rubric Alignment")
-    
+    st.markdown("""
+# CMSE 830 Final Project — End-to-End Text + News + Sentiment Analysis Dashboard
+### Prepared by: Harshitha J
 
 ---
 
-### ✔ Three distinct data sources used:
-1. **Airline Tweets** (sentiment labeled dataset)
-2. **ABC News Headlines** (large-scale text dataset)
-3. **Synthetic Stock Market Dataset** (derived for multi-source integration)
+# 1. Data Collection & Preparation (15%)
 
-### ✔ Advanced Cleaning & Preprocessing
-- Removed URLs, mentions, special characters  
-- Case normalization  
-- Stopword removal (via scikit-learn)  
-- Date parsing (YYYYMMDD → datetime)  
-- Converted raw headlines/tweets → `clean_text`  
-- Outlier handling in stock synthetic data  
-- Merged news_part1 & news_part2 with controlled memory footprint
+## Three distinct data sources used:
+1. Airline Tweets (labeled sentiment data)
+2. ABC News Headlines (large-scale text dataset)
+3. Synthetic Stock Market Dataset (created for multimodal integration)
 
-### ✔ Complex Data Integration
-- Combined multi-source signals (tweets + news + synthetic stocks)  
-- Unified date fields across datasets  
-- Engineered multi-modal features (news volume, sentiment labels, volatility)
+## Advanced Cleaning & Preprocessing
+- URL removal
+- Mention removal
+- Lowercasing
+- Punctuation stripping
+- Stopword removal (via scikit-learn)
+- Date parsing (YYYYMMDD -> datetime)
+- Headline text cleaning
+- Merge of news_part1 and news_part2
+- Handling of large dataset splits
 
----
-
-### ✔ At least 5 visualization types implemented:
-- Line charts (news over time)
-- Sentiment distribution bar chart
-- Word clouds (for tweets + news)
-- Stock trend line plot
-- Time-series volatility chart
-- Dataframe statistical summaries
-
-### ✔ Statistical Analysis
-- Tweet sentiment distribution  
-- News temporal density  
-- Stock return & volatility  
-- Overall dataset shape, descriptive stats  
+## Complex Data Integration
+- Unified date fields
+- Engineered combined text features
+- Multimodal handling (tweets + news + synthetic stocks)
 
 ---
 
-### ✔ Feature Engineering Techniques
-- `text_clean` / `headline_text_clean`
+# 2. Exploratory Data Analysis & Visualization (15%)
+
+## Visualizations included (5+):
+- Line chart of news volume over time
+- Tweet sentiment distribution bar chart
+- Word cloud for tweets
+- Word cloud for news
+- Synthetic stock close-price trend
+- Time series volatility chart
+- Statistical summaries
+
+---
+
+# 3. Data Processing & Feature Engineering (15%)
+
+## Feature Engineering Techniques:
 - TF-IDF vectorization (1500 features)
-- Rolling-window volatility (7-day)
-- Daily returns
 - Sentiment label encoding
+- Clean text field creation
+- Rolling-window volatility (7-day)
+- Daily returns computation
 
-### ✔ Advanced Transformations
-- n-gram modeling
-- Stratified data splitting
-- Large dataset sampling + reduction
-- Deduplicating & merging multi-file news data
-
----
-
-
-### ✔ Multiple ML Models Implemented
-- **Naive Bayes (MultinomialNB)**  
-- **Random Forest (200 trees)** (trained offline earlier)  
-- **Soft-Voting Ensemble** (original)
-
-### ✔ Evaluation and Comparison
-- Accuracy scores (NB: ~74%, RF: ~76%)
-- Classification report (precision/recall/F1)
-- Confusion matrix (in Model Evaluation page)
-- Justification of compact model for deployment (size < 4MB)
-
-### ✔ Validation Techniques
-- Stratified train/test split  
-- Held-out test set  
-- TF-IDF feature scaling  
+## Transformations:
+- n-gram text modeling
+- Stratified splitting
+- Memory-efficient dataset merging and sampling
 
 ---
 
+# 4. Model Development & Evaluation (20%)
 
-### ✔ Interactive Elements (more than 5)
-- Dataset viewers  
-- Sidebar navigation  
-- Tweet sentiment predictor  
-- Interactive plots  
-- Word clouds  
-- Model comparison  
-- Downloadable predictions (optional)
+## Models Implemented:
+- Multinomial Naive Bayes
+- Random Forest (trained offline)
+- Voting Ensemble (offline)
 
-### ✔ Features Implemented
-- Streamlit caching
+## Evaluation Techniques:
+- Train/test split (stratified)
+- Classification report
+- Accuracy comparison
+- Confusion matrix (offline)
+- Feature dimensionality reduction
+
+---
+
+# 5. Streamlit App Development (25%)
+
+## Implemented Features:
+- Multi-page Streamlit application
+- Interactive sidebar navigation
+- Sentiment prediction widget
+- Word cloud visualization
+- Interactive plots
 - Session state for model loading
-- Multi-page interface
-- Direct dataset integration from GitHub
+- Streamlit caching for performance
+
+## User Guide Included
+- Descriptions of datasets
+- Modeling explanation
+- Data processing pipeline
 
 ---
 
-- Professional folder structure  
-- Data directory with compressed datasets  
-- Requirements.txt  
-- Well-documented code  
-- Modeling details included in-app  
+# 6. GitHub Documentation (10%)
+- Organized folder structure
+- requirements.txt included
+- Data dictionary inside app
+- Comprehensive explanation page
 
 ---
 
+# Additional Credit Areas (Above & Beyond)
 
-### ✔ Advanced Modeling (Up to +5%)
-- Ensemble methods (VotingClassifier)
-- TF-IDF text vectorization modeling
+## Advanced Modeling (+5%)
+- Ensemble model (offline)
+- TF-IDF feature engineering
 
-### ✔ Specialized DS Application (Up to +5%)
-- Large-scale **text** dataset analysis  
-- NLP preprocessing & modeling  
+## Specialized Applications (+5%)
+- Large-scale text processing
+- NLP sentiment modeling
 
-### ✔ Handling Large Data / HPC (Up to +5%)
-- Managing >1.2M rows  
-- Data sampling + splitting  
-- Memory-efficient processing
+## High-Performance Computing (+5%)
+- Handling >1.2M original news rows
+- Data reduction and memory-safe pipelines
 
-### ✔ Real-World Impact (Up to +5%)
-- Sentiment ↔ news ↔ market behavior  
-- Dashboard for financial analytics teams  
+## Real-World Impact (+5%)
+- Sentiment -> News -> Trend analytics integration
 
-### ✔ Exceptional Presentation (Up to +5%)
-- Multi-page interactive dashboard  
-- Clear analysis narration  
-- Clean visuals & publication-ready layout  
+## Exceptional Presentation (+5%)
+- Clean visual design
+- Publication-quality word clouds and plots
 
 ---
 
-
-This project demonstrates a complete, multi-modal data science workflow:
-- Data collection  
-- Large-scale text processing  
-- Feature engineering  
-- ML model development  
-- Deployment with Streamlit  
-- Integration across datasets  
-
-Designed for real-world analytical applications and meeting all rubric criteria.
+# Conclusion
+This project demonstrates a full end-to-end data science pipeline:
+data collection, preprocessing, feature engineering, modeling,
+visualization, evaluation, and deployment through Streamlit Cloud.
     """)
 
