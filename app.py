@@ -305,11 +305,7 @@ def main():
         - **MAE:** ~7.3 AQI  
         - **RMSE:** ~11.5  
 
-        ✔ Meets rubric:  
-        - *“Train ML models”*  
-        - *“Evaluate using metrics”*  
-        - *“Advanced modeling (boosting)”*
-        """)
+       
 
         st.subheader("6. 🏗 Application Architecture (Streamlit App)")
         st.markdown("""
@@ -325,11 +321,6 @@ def main():
             - **Documentation**  
         - Interactive widgets (date filters, charts, maps)
 
-        ✔ Meets rubric:  
-        - *“Web app implementation”*  
-        - *“Interactive visualizations”*  
-        - *“Clean UI/UX”*
-        """)
 
         st.subheader("7. ✅ End-to-End Summary")
         st.markdown("""
