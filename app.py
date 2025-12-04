@@ -29,24 +29,24 @@ DATA_DIR = "data"
 
 
 @st.cache_data
-def load_local_csv(filename: str) -> pd.DataFrame:
-    path = os.path.join(DATA_DIR, filename)
-    if not os.path.exists(path):
-        st.error(f"File not found: {path}")
-        st.stop()
-    return pd.read_csv(path)
+def load_remote_csv(url: str) -> pd.DataFrame:
+    return pd.read_csv(url)
 
 
 @st.cache_data
 def load_all_datasets():
-    """
-    Uses the exact files in your /data folder.
-    Update names here if your CSV names change.
-    """
-    air = load_local_csv("global_air_quality_data_10000.csv")
-    weather = load_local_csv("testset.csv")          # Delhi / weather CSV
-    pop = load_local_csv("world_population.csv")
+    BASE = "https://raw.githubusercontent.com/Harshitha653/cmse830_final/main/data/"
+
+    air_url     = BASE + "global_air_quality_data_10000.csv"
+    weather_url = BASE + "testset.csv"
+    pop_url     = BASE + "world_population.csv"
+
+    air     = load_remote_csv(air_url)
+    weather = load_remote_csv(weather_url)
+    pop     = load_remote_csv(pop_url)
+
     return air, weather, pop
+
 
 
 def main():
