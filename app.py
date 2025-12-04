@@ -208,30 +208,33 @@ elif page == "Modeling Details":
 elif page == "Model Evaluation":
     st.title("📊 Model Evaluation & Comparison")
 
+    # Offline accuracy from training
+    compact_model_accuracy = 0.7442
+
     st.markdown("### **1. Model Performance Summary**")
-    st.write(f"**Compact NB Model Accuracy:** {acc:.4f} (as trained offline)")
+    st.write(f"**Compact Naive Bayes Model Accuracy:** {compact_model_accuracy:.4f} (offline evaluation)")
 
     st.markdown("""
 ### **2. Why Naive Bayes Was Chosen for Deployment**
 - Much smaller file (<4MB vs 60MB)
-- Fast inference
-- Works well for high-dimensional sparse text
-- Simplifies Streamlit deployment
+- Fast inference suitable for web app deployment
+- Works well for high-dimensional sparse text data
+- More stable, reproducible, and efficient on Streamlit Cloud
 """)
 
-    st.markdown("### **3. Confusion Matrix & Metric Visuals (Offline-ready)**")
-
-    st.info("Confusion matrix and classification report were generated during offline training. Add uploaded PNGs if needed.")
+    st.markdown("### **3. Confusion Matrix & Metric Visuals**")
+    st.info("Confusion matrix and classification report were generated offline during training. You may include them as images if desired.")
 
     st.markdown("""
 ### **4. Comparison Table**
 
-| Model | Features | Accuracy | Size | Deployment |
-|-------|----------|----------|------|------------|
-| Random Forest (200 trees) | TF-IDF 5000 | ~76% | 50–80MB | ❌ Too large |
-| Naive Bayes | TF-IDF 1500 | ~74% | 3–4MB | ✔ Perfect |
-| Voting Ensemble | Mixed | ~76% | 60MB | ❌ Too large |
+| Model | Features | Accuracy | File Size | Deployment Suitability |
+|-------|----------|----------|-----------|------------------------|
+| Random Forest (200 trees) | TF-IDF (5000 features) | ~0.760 | 50–80 MB | ❌ Too large for GitHub/Streamlit |
+| Voting Ensemble | Mixed (RF + NB) | ~0.760 | 60+ MB | ❌ Too large |
+| **Naive Bayes (FINAL)** | **TF-IDF (1500 features)** | **0.744** | **3–4 MB** | ✔ **Ideal for deployment** |
 """)
+
 
 
 # -------------------------------------------------------
@@ -239,13 +242,9 @@ elif page == "Model Evaluation":
 # -------------------------------------------------------
 elif page == "Project Report & Rubric Alignment":
     st.title("📘 Full Project Report & Rubric Alignment")
-    st.markdown("""
-# **CMSE 830 Final Project — End-to-End Text + News + Sentiment Analysis Dashboard**
-### **Prepared by: Harshitha J**
+    
 
 ---
-
-# 🔹 **1. Data Collection & Preparation (15%)**
 
 ### ✔ Three distinct data sources used:
 1. **Airline Tweets** (sentiment labeled dataset)
@@ -268,8 +267,6 @@ elif page == "Project Report & Rubric Alignment":
 
 ---
 
-# 🔹 **2. Exploratory Data Analysis & Visualization (15%)**
-
 ### ✔ At least 5 visualization types implemented:
 - Line charts (news over time)
 - Sentiment distribution bar chart
@@ -286,8 +283,6 @@ elif page == "Project Report & Rubric Alignment":
 
 ---
 
-# 🔹 **3. Data Processing & Feature Engineering (15%)**
-
 ### ✔ Feature Engineering Techniques
 - `text_clean` / `headline_text_clean`
 - TF-IDF vectorization (1500 features)
@@ -303,7 +298,6 @@ elif page == "Project Report & Rubric Alignment":
 
 ---
 
-# 🔹 **4. Model Development & Evaluation (20%)**
 
 ### ✔ Multiple ML Models Implemented
 - **Naive Bayes (MultinomialNB)**  
@@ -323,7 +317,6 @@ elif page == "Project Report & Rubric Alignment":
 
 ---
 
-# 🔹 **5. Streamlit App Development (25%)**
 
 ### ✔ Interactive Elements (more than 5)
 - Dataset viewers  
@@ -342,7 +335,6 @@ elif page == "Project Report & Rubric Alignment":
 
 ---
 
-# 🔹 **6. GitHub Repository & Documentation (10%)**
 - Professional folder structure  
 - Data directory with compressed datasets  
 - Requirements.txt  
@@ -351,7 +343,6 @@ elif page == "Project Report & Rubric Alignment":
 
 ---
 
-# ⭐ **ABOVE & BEYOND (For A Grade)**
 
 ### ✔ Advanced Modeling (Up to +5%)
 - Ensemble methods (VotingClassifier)
@@ -377,7 +368,7 @@ elif page == "Project Report & Rubric Alignment":
 
 ---
 
-# 🎉 **Conclusion**
+
 This project demonstrates a complete, multi-modal data science workflow:
 - Data collection  
 - Large-scale text processing  
