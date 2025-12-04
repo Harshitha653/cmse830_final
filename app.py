@@ -305,7 +305,8 @@ def main():
         - **MAE:** ~7.3 AQI  
         - **RMSE:** ~11.5  
 
-       
+        
+        """)
 
         st.subheader("6. 🏗 Application Architecture (Streamlit App)")
         st.markdown("""
@@ -321,6 +322,8 @@ def main():
             - **Documentation**  
         - Interactive widgets (date filters, charts, maps)
 
+        
+        """)
 
         st.subheader("7. ✅ End-to-End Summary")
         st.markdown("""
