@@ -148,16 +148,16 @@ def main():
 
             with st.expander("📌 Detailed Visualizations"):
                 st.subheader("Histogram")
-                plot_numeric_distribution(df, col_a, height=300)
+                plot_numeric_distribution(df, col_a)
 
                 st.subheader("Boxplot")
-                plot_boxplot(df, col_a, height=300)
+                plot_boxplot(df, col_a)
 
                 st.subheader("Scatter Plot")
-                plot_scatter(df, col_x, col_y, height=300)
+                plot_scatter(df, col_x, col_y)
 
                 st.subheader("Correlation Heatmap")
-                plot_correlation_heatmap(df, numeric_cols, height=350)
+                plot_correlation_heatmap(df, numeric_cols)
 
                 st.subheader("Pairplot")
                 pair_cols = st.multiselect(
@@ -220,7 +220,7 @@ def main():
     # ------------------ Documentation ------------------
     # ------------------ Documentation ------------------
     with tab_docs:
-        st.header("📄 Project Documentation")
+        st.header("Project Documentation")
         st.write("This page provides an end-to-end explanation of everything implemented in the CMSE 830 Final Project.")
 
         st.subheader("1. 📂 Datasets Used")
@@ -236,9 +236,7 @@ def main():
         - **World Population Dataset (Kaggle)**  
             Used to extract India's population metrics for integration.
 
-        ✔ Meets rubric requirement: *“Use at least three distinct data sources.”*
-        """)
-
+        
         st.subheader("2. 🧹 Data Cleaning & Preprocessing")
         st.markdown("""
         Several **advanced preprocessing** steps were performed across datasets:
@@ -264,9 +262,7 @@ def main():
         - Z-score normalization for pollutant checks  
         - Boxplots to visualize outliers  
 
-        ✔ Meets rubric requirement: *“Advanced data cleaning and preprocessing.”*
-        """)
-
+        
         st.subheader("3. 🔗 Data Integration Pipeline")
         st.markdown("""
         The three datasets were merged into a **single unified analytical dataset**:
@@ -283,9 +279,7 @@ def main():
         - Weather: temperature, humidity, windspeed, rainfall  
         - Population metrics: population, density, land-area, growth  
 
-        ✔ Meets rubric: *“Complex data integration techniques.”*
-        """)
-
+        
         st.subheader("4. 📊 Exploratory Data Analysis (EDA)")
         st.markdown("""
         Multiple **advanced visualizations** were created:
@@ -297,9 +291,6 @@ def main():
         - **Pairplot** for multi-variate relationships  
         - **Time-series plots** of AQI and temperature  
         - Rolling averages (7-day, 30-day)  
-
-        ✔ Meets rubric: *“5+ different visualizations including advanced types.”*
-        """)
 
         st.subheader("5. 🧠 Machine Learning Model Development")
         st.markdown("""
