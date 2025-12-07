@@ -220,7 +220,7 @@ def main():
     # ------------------ Documentation ------------------
     # ------------------ Documentation ------------------
     with tab_docs:
-        st.header("Project Documentation")
+        st.header("📄 Project Documentation")
         st.write("This page provides an end-to-end explanation of everything implemented in the CMSE 830 Final Project.")
 
         st.subheader("1. 📂 Datasets Used")
@@ -237,6 +237,8 @@ def main():
             Used to extract India's population metrics for integration.
 
         
+        """)
+
         st.subheader("2. 🧹 Data Cleaning & Preprocessing")
         st.markdown("""
         Several **advanced preprocessing** steps were performed across datasets:
@@ -263,6 +265,8 @@ def main():
         - Boxplots to visualize outliers  
 
         
+        """)
+
         st.subheader("3. 🔗 Data Integration Pipeline")
         st.markdown("""
         The three datasets were merged into a **single unified analytical dataset**:
@@ -280,6 +284,8 @@ def main():
         - Population metrics: population, density, land-area, growth  
 
         
+        """)
+
         st.subheader("4. 📊 Exploratory Data Analysis (EDA)")
         st.markdown("""
         Multiple **advanced visualizations** were created:
@@ -291,6 +297,9 @@ def main():
         - **Pairplot** for multi-variate relationships  
         - **Time-series plots** of AQI and temperature  
         - Rolling averages (7-day, 30-day)  
+
+       
+        """)
 
         st.subheader("5. 🧠 Machine Learning Model Development")
         st.markdown("""
