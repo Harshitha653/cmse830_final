@@ -109,47 +109,73 @@ def main():
         show_basic_info(integrated_df, "Integrated")
 
     # ------------------ EDA ------------------
-    with tab_eda:
-        st.header("📊 Exploratory Data Analysis (Integrated Dataset)")
+    # ------------------ EDA ------------------
+with tab_eda:
+    st.header("📊 Enhanced Exploratory Data Analysis (Integrated Dataset)")
 
-        df = integrated_df
-        numeric_cols = get_numeric_columns(df)
-        if not numeric_cols:
-            st.error("No numeric columns found for EDA.")
-        else:
-            col_a = st.selectbox("Column for histogram / boxplot", numeric_cols)
+    df = integrated_df
+    numeric_cols = get_numeric_columns(df)
+
+    with st.expander("🔍 Missing Value Heatmap & Cleaning Overview", expanded=True):
+        st.write("Heatmap shows where missing values existed before cleaning + imputation.")
+        plot_missing_heatmap(df)
+
+    if not numeric_cols:
+        st.error("No numeric columns found for EDA.")
+    else:
+        st.subheader("📈 Interactive EDA Controls")
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            col_a = st.selectbox("Column for Histogram / Boxplot", numeric_cols)
+
+        with col2:
             col_x = st.selectbox("X-axis (scatter)", numeric_cols)
+
+        with col3:
             col_y = st.selectbox("Y-axis (scatter)", numeric_cols, index=min(1, len(numeric_cols) - 1))
 
+        st.markdown("---")
+
+        # 2×2 Combined Subplots
+        st.subheader("🖼️ Compact 2×2 Visualization Dashboard")
+        plot_four_panel(df, col_a, col_x, col_y)
+
+        st.markdown("---")
+
+        with st.expander("📌 Detailed Visualizations"):
             st.subheader("Histogram")
-            plot_numeric_distribution(df, col_a)
+            plot_numeric_distribution(df, col_a, height=300)
 
             st.subheader("Boxplot")
-            plot_boxplot(df, col_a)
+            plot_boxplot(df, col_a, height=300)
 
             st.subheader("Scatter Plot")
-            plot_scatter(df, col_x, col_y)
+            plot_scatter(df, col_x, col_y, height=300)
 
             st.subheader("Correlation Heatmap")
-            plot_correlation_heatmap(df, numeric_cols)
+            plot_correlation_heatmap(df, numeric_cols, height=350)
 
             st.subheader("Pairplot")
             pair_cols = st.multiselect(
                 "Select up to 5 columns for pairplot",
                 numeric_cols,
-                default=numeric_cols[: min(5, len(numeric_cols))],
+                default=numeric_cols[: min(5, len(numeric_cols))]
             )
             if pair_cols:
                 plot_pairplot(df, pair_cols)
 
-            st.subheader("Time-Series Plot (if date columns exist)")
-            date_cols = [c for c in df.columns if "date" in c.lower() or "time" in c.lower()]
-            if date_cols:
-                ts_col = st.selectbox("Date/Time column", date_cols)
-                val_col = st.selectbox("Value column", numeric_cols)
-                plot_time_series(df, ts_col, val_col)
-            else:
-                st.info("No obvious date/time columns detected in the integrated dataset.")
+        # ----- Time-series -----
+        st.subheader("⏳ Time-Series Plot")
+        date_cols = [c for c in df.columns if "date" in c.lower() or "time" in c.lower()]
+        if date_cols:
+            ts_col = st.selectbox("Date/Time column", date_cols)
+            val_col = st.selectbox("Value column", numeric_cols)
+            plot_time_series(df, ts_col, val_col)
+        else:
+            st.info("No date/time columns detected.")
+
 
     # ------------------ Feature Engineering & Modeling ------------------
     with tab_model:

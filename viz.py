@@ -48,3 +48,36 @@ def plot_time_series(df, time_col, val_col):
     ax.plot(df[time_col], df[val_col])
     plt.xticks(rotation=45)
     st.pyplot(fig)
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+def plot_missing_heatmap(df):
+    missing = df.isnull()
+    plt.figure(figsize=(10, 5))
+    sns.heatmap(missing, cbar=False, cmap="Reds")
+    st.pyplot(plt)
+
+def plot_four_panel(df, col_a, col_x, col_y):
+    fig, axes = plt.subplots(2, 2, figsize=(10, 7))
+    axes = axes.flatten()
+
+    # Histogram
+    sns.histplot(df[col_a].dropna(), ax=axes[0], kde=True)
+    axes[0].set_title(f"Histogram of {col_a}")
+
+    # Boxplot
+    sns.boxplot(x=df[col_a], ax=axes[1])
+    axes[1].set_title(f"Boxplot of {col_a}")
+
+    # Scatter
+    sns.scatterplot(x=df[col_x], y=df[col_y], ax=axes[2], s=20)
+    axes[2].set_title(f"{col_x} vs {col_y}")
+
+    # Correlation heatmap
+    corr = df[[col_a, col_x, col_y]].corr()
+    sns.heatmap(corr, annot=True, cmap="coolwarm", ax=axes[3])
+    axes[3].set_title("Local Correlations")
+
+    plt.tight_layout()
+    st.pyplot(fig)
