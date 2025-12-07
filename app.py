@@ -18,6 +18,8 @@ from viz import (
     plot_correlation_heatmap,
     plot_pairplot,
     plot_time_series,
+    plot_missing_heatmap,
+    plot_four_panel
 )
 
 st.set_page_config(
