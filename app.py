@@ -2,8 +2,7 @@
 import os
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+
 
 
 from data_processing import (
@@ -12,6 +11,7 @@ from data_processing import (
     add_feature_engineering,
     get_numeric_columns,
 )
+
 from modeling import prepare_model_data, train_models, evaluate_models
 from viz import (
     show_basic_info,
@@ -136,10 +136,14 @@ def main():
         with st.expander("Before vs After Cleaning – Outlier Visualization"):
             st.write("These plots visualize how preprocessing (IQR/Z-score filtering) removed outliers.")
 
-            raw_air = air_df.copy()  # before cleaning
-            cleaned = df  # after cleaning
+            # Before cleaning
+            raw_air = air_df.copy()
+            cleaned = df
 
             col = st.selectbox("Select column to compare", get_numeric_columns(cleaned))
+
+            import matplotlib.pyplot as plt
+            import seaborn as sns
 
             fig, axes = plt.subplots(1, 2, figsize=(12, 4))
 
@@ -151,6 +155,7 @@ def main():
 
             plt.tight_layout()
             st.pyplot(fig)
+
 
 
         if not numeric_cols:
