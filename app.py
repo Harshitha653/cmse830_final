@@ -130,9 +130,6 @@ def main():
         df = integrated_df
         numeric_cols = get_numeric_columns(df)
 
-        with st.expander("🔍 Missing Value Heatmap & Cleaning Overview", expanded=True):
-            st.write("Heatmap shows where missing values existed before cleaning + imputation.")
-            plot_missing_heatmap(df)
 
         with st.expander("Before vs After Cleaning – Outlier Visualization"):
             st.write("These plots visualize how preprocessing (IQR/Z-score filtering) removed outliers.")
