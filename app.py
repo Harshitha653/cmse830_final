@@ -1,4 +1,5 @@
 # app.py
+
 import os
 import streamlit as st
 import pandas as pd
@@ -136,15 +137,12 @@ def main():
         with st.expander("Before vs After Cleaning – Outlier Visualization"):
             st.write("These plots visualize how preprocessing (IQR/Z-score filtering) removed outliers.")
 
-            # Before cleaning
-            raw_air = air_df.copy()
-            cleaned = df
+            raw_air = air_df.copy()  # before cleaning
+            cleaned = df  # after cleaning
 
             col = st.selectbox("Select column to compare", get_numeric_columns(cleaned))
-
             import matplotlib.pyplot as plt
             import seaborn as sns
-
             fig, axes = plt.subplots(1, 2, figsize=(12, 4))
 
             sns.boxplot(x=raw_air[col], ax=axes[0])
@@ -155,7 +153,6 @@ def main():
 
             plt.tight_layout()
             st.pyplot(fig)
-
 
 
         if not numeric_cols:

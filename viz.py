@@ -21,12 +21,9 @@ def plot_numeric_distribution(df, col):
 
 
 def plot_boxplot(df, col):
-    fig, ax = plt.subplots(figsize=(8, 1.5))  # short height
-    sns.boxplot(x=df[col], ax=ax, color="#4C72B0", width=0.4, showfliers=True)
-    ax.set_title(f"Boxplot of {col}")
-    ax.set_xlabel("")
+    fig, ax = plt.subplots()
+    sns.boxplot(x=df[col], ax=ax)
     st.pyplot(fig)
-
 
 
 def plot_scatter(df, x, y):
