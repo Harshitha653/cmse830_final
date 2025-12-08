@@ -3,6 +3,7 @@ import seaborn as sns
 import pandas as pd
 import streamlit as st
 
+sns.set_theme(style="whitegrid", font_scale=1.1)
 
 def show_basic_info(df, name):
     st.write(f"### {name}: {df.shape[0]} rows × {df.shape[1]} columns")
@@ -20,9 +21,12 @@ def plot_numeric_distribution(df, col):
 
 
 def plot_boxplot(df, col):
-    fig, ax = plt.subplots()
-    sns.boxplot(x=df[col], ax=ax)
+    fig, ax = plt.subplots(figsize=(8, 1.5))  # short height
+    sns.boxplot(x=df[col], ax=ax, color="#4C72B0", width=0.4, showfliers=True)
+    ax.set_title(f"Boxplot of {col}")
+    ax.set_xlabel("")
     st.pyplot(fig)
+
 
 
 def plot_scatter(df, x, y):
@@ -59,24 +63,27 @@ def plot_missing_heatmap(df):
     st.pyplot(plt)
 
 def plot_four_panel(df, col_a, col_x, col_y):
-    fig, axes = plt.subplots(2, 2, figsize=(10, 7))
+    fig, axes = plt.subplots(2, 2, figsize=(12, 7))  # wider
     axes = axes.flatten()
 
     # Histogram
     sns.histplot(df[col_a].dropna(), ax=axes[0], kde=True)
     axes[0].set_title(f"Histogram of {col_a}")
+    axes[0].tick_params(axis='x', rotation=0)
 
     # Boxplot
     sns.boxplot(x=df[col_a], ax=axes[1])
     axes[1].set_title(f"Boxplot of {col_a}")
+    axes[1].tick_params(axis='x', rotation=0)
 
     # Scatter
-    sns.scatterplot(x=df[col_x], y=df[col_y], ax=axes[2], s=20)
+    sns.scatterplot(x=df[col_x], y=df[col_y], ax=axes[2], s=15)
     axes[2].set_title(f"{col_x} vs {col_y}")
+    axes[2].tick_params(axis='x', rotation=0)
 
-    # Correlation heatmap
+    # Local correlation heatmap
     corr = df[[col_a, col_x, col_y]].corr()
-    sns.heatmap(corr, annot=True, cmap="coolwarm", ax=axes[3])
+    sns.heatmap(corr, annot=True, cmap="coolwarm", ax=axes[3], cbar=True)
     axes[3].set_title("Local Correlations")
 
     plt.tight_layout()

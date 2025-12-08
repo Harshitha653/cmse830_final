@@ -78,9 +78,17 @@ def main():
     st.success(f"Integrated dataset shape: {integrated_df.shape[0]} rows × {integrated_df.shape[1]} columns")
 
     # ------------------ Tabs ------------------
-    tab_overview, tab_data, tab_eda, tab_model, tab_docs = st.tabs(
-        ["Overview", "Data & Integration", "EDA", "Feature Engineering & Modeling", "Documentation"]
+    tab_overview, tab_data, tab_eda, tab_model, tab_predict, tab_docs = st.tabs(
+    [
+        "Overview",
+        "Data & Integration",
+        "EDA",
+        "Feature Engineering & Modeling",
+        "Prediction & Statistics",   # NEW TAB
+        "Documentation"
+    ]
     )
+
 
     # ------------------ Overview ------------------
     with tab_overview:
@@ -121,6 +129,26 @@ def main():
         with st.expander("🔍 Missing Value Heatmap & Cleaning Overview", expanded=True):
             st.write("Heatmap shows where missing values existed before cleaning + imputation.")
             plot_missing_heatmap(df)
+
+        with st.expander("Before vs After Cleaning – Outlier Visualization"):
+            st.write("These plots visualize how preprocessing (IQR/Z-score filtering) removed outliers.")
+
+            raw_air = air_df.copy()  # before cleaning
+            cleaned = df  # after cleaning
+
+            col = st.selectbox("Select column to compare", get_numeric_columns(cleaned))
+
+            fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+
+            sns.boxplot(x=raw_air[col], ax=axes[0])
+            axes[0].set_title(f"Before Cleaning – {col}")
+
+            sns.boxplot(x=cleaned[col], ax=axes[1])
+            axes[1].set_title(f"After Cleaning – {col}")
+
+            plt.tight_layout()
+            st.pyplot(fig)
+
 
         if not numeric_cols:
             st.error("No numeric columns found for EDA.")
@@ -217,7 +245,99 @@ def main():
                     st.subheader("Model Comparison")
                     st.dataframe(results)
 
-    # ------------------ Documentation ------------------
+    # ------------------ Prediction & Statistics ------------------
+    with tab_predict:
+        st.header("📈 Prediction Output & Model Statistics")
+
+        df = integrated_df
+        engineered_df = add_feature_engineering(df)
+
+        numeric_cols = get_numeric_columns(engineered_df)
+
+        if not numeric_cols:
+            st.error("No numeric columns available for predictions.")
+        else:
+            st.subheader("Select Target & Features")
+
+            target_col = st.selectbox("Target variable (AQI recommended)", numeric_cols)
+            feature_candidates = [c for c in numeric_cols if c != target_col]
+
+            feature_cols = st.multiselect(
+                "Feature columns for prediction",
+                feature_candidates,
+                default=feature_candidates[:5]
+            )
+
+            test_size = st.slider("Test size", 0.1, 0.4, 0.2)
+
+            if st.button("Run Prediction"):
+                if not feature_cols:
+                    st.warning("Select at least one feature.")
+                else:
+                    X_train, X_test, y_train, y_test = prepare_model_data(
+                        engineered_df, target_col, feature_cols, test_size=test_size
+                    )
+
+                    models = train_models(X_train, y_train)
+                    results = evaluate_models(models, X_train, y_train, X_test, y_test)
+
+                    st.subheader("Model Comparison")
+                    st.dataframe(results)
+
+                    # Pick best model by R²
+                    best_name = results["R2"].idxmax()
+                    best_model = models[best_name]
+
+                    st.success(f"Best Model Selected: **{best_name}**")
+
+                    y_pred = best_model.predict(X_test)
+
+                    # --- Stats Plots ---
+                    import matplotlib.pyplot as plt
+                    import seaborn as sns
+
+                    st.subheader("📌 Actual vs Predicted")
+
+                    fig1, ax1 = plt.subplots(figsize=(6, 4))
+                    sns.scatterplot(x=y_test, y=y_pred, ax=ax1)
+                    ax1.set_xlabel("Actual Values")
+                    ax1.set_ylabel("Predicted Values")
+                    ax1.set_title("Actual vs Predicted AQI")
+                    st.pyplot(fig1)
+
+                    st.subheader("📌 Residual Plot")
+                    residuals = y_test - y_pred
+
+                    fig2, ax2 = plt.subplots(figsize=(6, 4))
+                    sns.scatterplot(x=y_pred, y=residuals, ax=ax2)
+                    ax2.axhline(0, color='red', linestyle='--')
+                    ax2.set_xlabel("Predicted")
+                    ax2.set_ylabel("Residuals")
+                    ax2.set_title("Residuals vs Predicted")
+                    st.pyplot(fig2)
+
+                    st.subheader("📌 Error Distribution")
+                    fig3, ax3 = plt.subplots(figsize=(6, 4))
+                    sns.histplot(residuals, kde=True, ax=ax3)
+                    ax3.set_title("Error Distribution (Residuals)")
+                    st.pyplot(fig3)
+
+                    # Feature importance (Tree models only)
+                    if hasattr(best_model, "feature_importances_"):
+                        st.subheader("📌 Feature Importance")
+
+                        fig4, ax4 = plt.subplots(figsize=(6, 4))
+                        sns.barplot(
+                            x=best_model.feature_importances_,
+                            y=feature_cols,
+                            ax=ax4
+                        )
+                        ax4.set_title("Feature Importance")
+                        st.pyplot(fig4)
+                    else:
+                        st.info("Feature importance not available for this model.")
+
+
     # ------------------ Documentation ------------------
     with tab_docs:
         st.header("📄 Project Documentation")
@@ -336,23 +456,7 @@ def main():
         
         """)
 
-        st.subheader("6. 🏗 Application Architecture (Streamlit App)")
-        st.markdown("""
-        The project is deployed using **Streamlit Cloud**, with:
-
-        - **GitHub raw links** for stable data loading  
-        - `@st.cache_data` for performance  
-        - Multi-tab UI:
-            - Home  
-            - EDA  
-            - Modeling  
-            - Integrated Dataset  
-            - **Documentation**  
-        - Interactive widgets (date filters, charts, maps)
-
         
-        """)
-
         st.subheader("7. ✅ End-to-End Summary")
         st.markdown("""
         - 3 datasets collected (Air, Weather, Population)  
